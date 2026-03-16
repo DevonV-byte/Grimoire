@@ -33,12 +33,3 @@ Follow these instructions to set up and run the application on your local machin
    ```bash
    pip install -r requirements.txt
    ```
-
-### Running the Application
-
-1. **Run the Streamlit app:**
-   ```bash
-   streamlit run Test.py
-   ```
-
-2. **Open your web browser** and navigate to the local URL provided by Streamlit (usually `http://localhost:8501`).
