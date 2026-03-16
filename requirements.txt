@@ -1,0 +1,6 @@
+langchain
+langchain-google-genai
+streamlit
+chromadb
+python-docx
+jupyter
