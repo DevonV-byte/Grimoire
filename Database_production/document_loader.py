@@ -25,22 +25,25 @@ def get_loader(file_path):
     else:
         return None
 
-# --- Main loop ---
-def main():
+def load_course_documents(course_dir):
     """
-    Loads all allowed documents from the course directory.
+    Loops through the course folder, identifies file types, applies the correct loader,
+    and extracts the raw text from the documents.
     """
     loaded_documents = []
-    for root, _, files in os.walk(COURSE_DIR):
+    for root, _, files in os.walk(course_dir):
         for file in files:
             if any(file.endswith(ext) for ext in ALLOWED_EXTENSIONS):
                 file_path = os.path.join(root, file)
                 loader = get_loader(file_path)
                 if loader:
                     loaded_documents.extend(loader.load())
+    return loaded_documents
 
-    # TODO: Process the loaded_documents further (e.g., chunking, embedding, storing in a vector DB)
-    print(f"Loaded {len(loaded_documents)} documents.")
+def main():
+    """Loads documents and prints the total number of documents loaded."""
+    documents = load_course_documents(COURSE_DIR)
+    print(f"Loaded {len(documents)} documents.")
 
 if __name__ == "__main__":
     main()
