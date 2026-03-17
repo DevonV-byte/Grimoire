@@ -1,5 +1,6 @@
 langchain
 langchain-google-genai
+langchain_community
 streamlit
 chromadb
 python-docx

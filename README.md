@@ -33,3 +33,12 @@ Follow these instructions to set up and run the application on your local machin
    ```bash
    pip install -r requirements.txt
    ```
+
+### Allowed document types
+```bash
+.docx
+.pdf
+.txt
+.ipynb
+.py
+```

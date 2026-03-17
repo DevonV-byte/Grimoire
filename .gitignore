@@ -1,6 +1,8 @@
 # Directories
 .venv
 .env
+IBM RAG and Agentic AI
+Database
 
 # Filetypes
 *.pyc
