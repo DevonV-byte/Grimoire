@@ -7,3 +7,5 @@ Database
 # Filetypes
 *.pyc
 
+# Files
+GEMINI.md

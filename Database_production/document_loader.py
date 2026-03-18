@@ -3,9 +3,10 @@ import os
 from langchain_community.document_loaders import (
     TextLoader, Docx2txtLoader, NotebookLoader, PythonLoader
 )
+from .text_splitter import split_documents
 
 # --- Globals ---
-COURSE_DIR = "../IBM RAG and Agentic AI"
+COURSE_DIR = "IBM RAG and Agentic AI"
 ALLOWED_EXTENSIONS = {".txt", ".docx", ".ipynb", ".py"}
 
 # --- Helpers ---
@@ -41,9 +42,10 @@ def load_course_documents(course_dir):
     return loaded_documents
 
 def main():
-    """Loads documents and prints the total number of documents loaded."""
+    """Loads documents, splits them into chunks, and prints the total number of chunks."""
     documents = load_course_documents(COURSE_DIR)
-    print(f"Loaded {len(documents)} documents.")
+    chunks = split_documents(documents)
+    print(f"Loaded {len(documents)} documents and split them into {len(chunks)} chunks.")
 
 if __name__ == "__main__":
     main()

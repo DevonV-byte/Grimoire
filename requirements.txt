@@ -1,6 +1,7 @@
 langchain
 langchain-google-genai
 langchain_community
+langchain-text-splitters
 streamlit
 chromadb
 python-docx
