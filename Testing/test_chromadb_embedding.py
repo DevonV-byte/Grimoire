@@ -35,3 +35,6 @@ def test_database_connection_and_population():
     assert all(key in item and len(item[key]) == 1 for key in ["ids", "documents", "metadatas", "embeddings"])
     
     print("Successfully verified database connection, population, and item structure.")
+
+if __name__ == "__main__":
+    test_database_connection_and_population()
