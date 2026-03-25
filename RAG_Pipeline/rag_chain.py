@@ -2,6 +2,7 @@
 # 
 # Created: 2026-03-20
 # Author: Devon Vanaenrode
+# Updated: 2026-03-25
 # --- Imports ---
 import os
 from dotenv import load_dotenv
@@ -14,7 +15,6 @@ from langchain_classic.chains import RetrievalQA
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
 from langchain_core.output_parsers import JsonOutputParser
 
 from Database_production.document_loader import COURSE_DIR, load_course_documents
@@ -22,7 +22,8 @@ from Database_production.text_splitter import split_documents
 from Database_production import embeddings
 
 # --- Constants ---
-CHROMA_DB_PATH = "../Database/"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CHROMA_DB_PATH = os.path.join(SCRIPT_DIR, "..", "Database")
 COLLECTION_NAME = "autoquizzer_collection"
 
 # --- Functions ---
@@ -96,40 +97,42 @@ def rag_chain(llm_model, prompt_template, vectorstore):
     
     return qa_chain
 
-# --- Main Execution ---
-def main():
+def get_quiz_generation_chain():
     """
-    Create the LLM model, connect ChromaDB to the prompt, pipe it into Gemini and test with simple string.
+    Initializes and returns the quiz generation RAG chain.
     """
     try:
-        # Initialize LLM model
         llm_model = get_llm_model()
-        # print("Successfully initialized the LLM model.")
-
-        # Create the prompt
-        chain_type_kwargs = create_prompt_template(3, 3)
-        # print("Successfully created the prompt.")
-
-        # Get documents from Chromadb
+        prompt = create_prompt_template(3, 3) # Using default values for now
         embeddings_model = embeddings.get_embeddings_model()
         vectorstore = Chroma(
             persist_directory=CHROMA_DB_PATH,
             collection_name=COLLECTION_NAME,
             embedding_function=embeddings_model
         )
-        RAG_chain = rag_chain(llm_model, chain_type_kwargs, vectorstore)
+        return rag_chain(llm_model, prompt, vectorstore)
+    except (ValueError, FileNotFoundError) as e:
+        # Should probably log this or handle it better
+        print(f"Error initializing quiz generation chain: {e}")
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred during chain initialization: {e}")
+        return None
 
+# --- Main Execution ---
+def main():
+    """
+    Create the LLM model, connect ChromaDB to the prompt, pipe it into Gemini and test with simple string.
+    """
+    RAG_chain = get_quiz_generation_chain()
+
+    if RAG_chain:
         # Test our retrievalQA
         query = "Prompt Engineering"
         quiz = RAG_chain.invoke(query)
         print(quiz)
-        print(quiz["quiz_title"])
-
-    except (ValueError, FileNotFoundError) as e:
-        print(f"Error: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-    
+        if quiz and "quiz_title" in quiz:
+            print(quiz["quiz_title"])
 
 if __name__ == "__main__":
     main()
