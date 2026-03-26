@@ -1,0 +1,18 @@
+# Virtual environment — rebuilt inside the image via requirements.txt
+.venv/
+
+# Secrets — GOOGLE_API_KEY must be passed at runtime via -e, never baked in
+.env
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Version control and tooling
+.git/
+.gitignore
+.pytest_cache/
+
+# Course materials unrelated to the application
+IBM RAG and Agentic AI/
