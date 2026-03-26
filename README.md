@@ -1,5 +1,5 @@
 # Grimoire
-An interactive quiz application demonstrating Retrieval-Augmented Generation (RAG). Built using LangChain Expression Language (LCEL), Google's Gemini LLM, and ChromaDB for local vector embeddings, all wrapped in a Streamlit interface.
+Grimoire turns any uploaded document into a retro 2D RPG world. Course notes, textbooks, coding references, or math summaries become explorable zones populated with enemies, NPCs, and quests. Every combat encounter is a quiz powered by a RAG pipeline. Every wrong answer costs HP. Every victory earns XP and loot.
 
 ## Getting Started
 
